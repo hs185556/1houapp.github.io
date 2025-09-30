@@ -39,8 +39,6 @@
             width: 80%;
             margin: 25px auto;
             padding: 14px 0;
-            background-color: #e60012;
-            color: white;
             font-size: 16px;
             font-weight: bold;
             border: none;
@@ -48,8 +46,23 @@
             cursor: pointer;
         }
 
-        .btn:active {
+        .btn-open {
+            background-color: #e60012;
+            color: white;
+        }
+
+        .btn-open:active {
             background-color: #cc0010;
+        }
+
+        .btn-download {
+            background-color: #fff;
+            color: #e60012;
+            border: 1px solid #e60012;
+        }
+
+        .btn-download:active {
+            background-color: #f9f9f9;
         }
 
         .note {
@@ -63,46 +76,41 @@
 <body>
     <div class="container">
         <h1>测试唤起拼多多 App</h1>
-        <p>点击下方按钮尝试打开拼多多 App</p>
+        <p>点击下方按钮尝试打开或下载拼多多</p>
 
-        <button class="btn" id="openBtn">打开拼多多</button>
+        <!-- 唤起App按钮 -->
+        <button class="btn btn-open" id="openBtn">打开拼多多</button>
+
+        <!-- 下载App按钮 -->
+        <button class="btn btn-download" id="downloadBtn">下载拼多多 App</button>
 
         <div class="note">
-            <p>说明：</p>
-            <p>✅ 已安装 App：应跳转至拼多多</p>
-            <p>❌ 未安装 App：将跳转至下载页面</p>
-            <p>⚠️ 微信内可能无法唤起，请使用外部浏览器打开本页</p>
+            <p>✅ 已安装 App：点击“打开拼多多”可直接唤起</p>
+            <p>❌ 未安装 App：请手动点击“下载拼多多 App”</p>
+            <p>⚠️ 微信内无法唤起，请使用外部浏览器打开本页</p>
         </div>
     </div>
 
     <script>
+        // 唤起拼多多 App
         function launchApp() {
-            const pddScheme = 'pinduoduo://'; // 拼多多 URL Scheme
-            const downloadUrl = 'https://www.pinduoduo.com/home/download/'; // 官方下载页（可替换为你自己的）
-
+            const pddScheme = 'pdd://'; // ✅ 使用真实有效的 Scheme
             let opened = false;
 
-            // 创建 iframe 唤起（兼容性较好）
+            // 方式1：创建隐藏 iframe 尝试唤起
             const iframe = document.createElement('iframe');
             iframe.style.display = 'none';
             iframe.src = pddScheme;
             document.body.appendChild(iframe);
 
-            // 使用 window.location.href 方式尝试（部分浏览器支持）
+            // 方式2：使用 location.href 再试一次
             setTimeout(() => {
                 if (!opened) {
                     window.location.href = pddScheme;
                 }
             }, 100);
 
-            // 判断是否唤起失败：3秒后跳转下载页
-            setTimeout(() => {
-                if (!opened) {
-                    window.location.href = downloadUrl;
-                }
-            }, 5000);
-
-            // 监听页面可见性变化（侧面判断是否跳走了）
+            // 监听页面是否被切走（间接判断是否唤起成功）
             const visibilityChange = () => {
                 if (document.visibilityState === 'hidden') {
                     opened = true;
@@ -111,8 +119,15 @@
             };
             document.addEventListener('visibilitychange', visibilityChange);
         }
+
+        // 下载拼多多
+        function downloadApp() {
+            window.location.href = 'https://www.pinduoduo.com/home/download/';
+        }
+
+        // 绑定按钮事件
         document.getElementById('openBtn').addEventListener('click', launchApp);
-        launchApp();
+        document.getElementById('downloadBtn').addEventListener('click', downloadApp);
     </script>
 </body>
 
