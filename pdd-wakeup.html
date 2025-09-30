@@ -76,7 +76,7 @@
     </div>
 
     <script>
-        document.getElementById('openBtn').addEventListener('click', function () {
+        function launchApp() {
             const pddScheme = 'pinduoduo://'; // 拼多多 URL Scheme
             const downloadUrl = 'https://www.pinduoduo.com/home/download/'; // 官方下载页（可替换为你自己的）
 
@@ -110,7 +110,9 @@
                 }
             };
             document.addEventListener('visibilitychange', visibilityChange);
-        });
+        }
+        document.getElementById('openBtn').addEventListener('click', launchApp);
+        launchApp();
     </script>
 </body>
 
