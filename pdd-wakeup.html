@@ -77,10 +77,12 @@
 
     <script>
         document.getElementById('openBtn').addEventListener('click', function () {
-            const pddScheme = 'pdd://'; // 拼多多 URL Scheme
-            const downloadUrl = 'https://www.pinduoduo.com/home/download/'; // 官方下载页（可替换为你自己的）
+            window.location.href = 'weixin://';
+            alert(1)
+            // const pddScheme = 'pdd://'; // 拼多多 URL Scheme
+            // const downloadUrl = 'https://www.pinduoduo.com/home/download/'; // 官方下载页（可替换为你自己的）
 
-            window.location.href = pddScheme;
+            // window.location.href = pddScheme;
             // let opened = false;
 
             // // 创建 iframe 唤起（兼容性较好）
